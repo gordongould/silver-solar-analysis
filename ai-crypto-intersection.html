@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Crypto Intersection — Bull Case, Bear Case & Weighted Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --surface-2: #1e1e1e;
+  --surface-3: #2a2a2a;
+  --text: #e8e8e8;
+  --text-dim: #888;
+  --text-muted: #666;
+  --accent: #7c5cfc;
+  --accent-dim: #5a3fc9;
+  --green: #34d399;
+  --red: #f87171;
+  --yellow: #fbbf24;
+  --blue: #60a5fa;
+  --orange: #fb923c;
+  --border: #2a2a2a;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 15px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Layout */
+.wrapper {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+/* Sidebar TOC */
+.toc {
+  position: sticky;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 40px 20px;
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.toc-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+}
+.toc a {
+  display: block;
+  font-size: 13px;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color 0.15s;
+  line-height: 1.4;
+}
+.toc a:hover, .toc a.active { color: var(--accent); }
+.toc .toc-h2 { padding-left: 0; }
+.toc .toc-h3 { padding-left: 16px; font-size: 12px; }
+.toc .toc-h4 { padding-left: 32px; font-size: 11px; }
+
+/* Main Content */
+main {
+  flex: 1;
+  padding: 60px 60px 100px;
+  max-width: 780px;
+}
+
+/* Typography */
+h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 40px;
+}
+h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  letter-spacing: -0.3px;
+}
+h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 28px;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: var(--text-dim);
+}
+p { margin-bottom: 16px; color: #ccc; }
+strong { color: #fff; font-weight: 600; }
+
+/* Details/Summary expandable */
+details {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+details:hover { border-color: #3a3a3a; }
+details[open] { border-color: var(--accent-dim); }
+summary {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+summary::before {
+  content: '▶';
+  font-size: 10px;
+  color: var(--text-dim);
+  transition: transform 0.2s;
+}
+details[open] summary::before {
+  transform: rotate(90deg);
+}
+details[open] .detail-body {
+  padding: 0 18px 18px;
+}
+.detail-body p { font-size: 14px; }
+
+/* Verified badges */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.badge-verified { background: #065f4620; color: var(--green); border: 1px solid #065f46; }
+.badge-plausible { background: #78350f20; color: var(--orange); border: 1px solid #78350f; }
+.badge-uncertain { background: #1e3a5f20; color: var(--blue); border: 1px solid #1e3a5f; }
+
+/* Comparison table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+th {
+  background: var(--surface-2);
+  color: var(--text-dim);
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--border);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: #bbb;
+  vertical-align: top;
+}
+tr:hover td { background: var(--surface-2); }
+
+/* Weighted analysis bars */
+.bar-chart { margin: 20px 0; }
+.bar-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+.bar-label {
+  width: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: right;
+  flex-shrink: 0;
+}
+.bar-track {
+  flex: 1;
+  height: 28px;
+  background: var(--surface-2);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  transition: width 0.5s ease;
+  min-width: 32px;
+}
+.bar-fill.stablecoins { background: linear-gradient(90deg, #059669, #34d399); }
+.bar-fill.coinbase { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+.bar-fill.solana { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+.bar-fill.chainlink { background: linear-gradient(90deg, #d97706, #fbbf24); }
+.bar-fill.bittensor { background: linear-gradient(90deg, #dc2626, #f87171); }
+.bar-fill.near { background: linear-gradient(90deg, #0891b2, #22d3ee); }
+
+.bar-pct {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  width: 40px;
+  text-align: left;
+}
+
+/* Verdict box */
+.verdict-box {
+  background: linear-gradient(135deg, var(--surface) 0%, #1a1a2e 100%);
+  border: 1px solid var(--accent-dim);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 24px 0;
+}
+.verdict-box h3 { margin-top: 0; color: var(--accent); }
+
+/* Prediction card */
+.prediction-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+.prediction-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+.prediction-card.bull { border-left: 3px solid var(--green); }
+.prediction-card.bear { border-left: 3px solid var(--red); }
+.prediction-card h4 { margin-top: 0; font-size: 13px; }
+.prediction-card p { font-size: 13px; margin-bottom: 0; }
+
+/* Footer */
+.footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .toc { display: none; }
+  main { padding: 30px 24px 60px; }
+  .bar-label { width: 70px; font-size: 12px; }
+  .prediction-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+<!-- Sidebar TOC -->
+<nav class="toc" id="toc">
+  <div class="toc-title">Table of Contents</div>
+  <a href="#executive-summary" class="toc-h2">Executive Summary</a>
+  <a href="#bull-case" class="toc-h2">1. Bull Case</a>
+  <a href="#identity-problem" class="toc-h3">1.1 The Identity Problem</a>
+  <a href="#micropayment-math" class="toc-h3">1.2 Micropayment Math</a>
+  <a href="#stablecoin-granularity" class="toc-h3">1.3 Stablecoin Granularity</a>
+  <a href="#x402" class="toc-h3">1.4 x402 Protocol</a>
+  <a href="#ai-using-crypto" class="toc-h3">1.5 AI → Crypto</a>
+  <a href="#bear-case" class="toc-h2">2. Bear Case</a>
+  <a href="#centralized-alternative" class="toc-h3">2.1 Centralized Risk</a>
+  <a href="#walled-garden" class="toc-h3">2.2 Walled Gardens</a>
+  <a href="#bittensor-subsidy" class="toc-h3">2.3 Bittensor Subsidy</a>
+  <a href="#scale-problem" class="toc-h3">2.4 Scale Problem</a>
+  <a href="#regulation" class="toc-h3">2.5 Regulation</a>
+  <a href="#weighted-analysis" class="toc-h2">3. Weighted Token Analysis</a>
+  <a href="#tier-1" class="toc-h3">Tier 1: High Conviction</a>
+  <a href="#tier-2" class="toc-h3">Tier 2: Medium Conviction</a>
+  <a href="#tier-3" class="toc-h3">Tier 3: Speculative</a>
+  <a href="#tier-4" class="toc-h3">Tier 4: Watch List</a>
+  <a href="#allocation-table" class="toc-h3">Weighted Summary</a>
+  <a href="#big-question" class="toc-h4">The Big Question</a>
+  <a href="#testable-predictions" class="toc-h2">4. Testable Predictions</a>
+</nav>
+
+<!-- Main Content -->
+<main>
+
+<h1>The AI-Crypto Intersection</h1>
+<p class="subtitle">Bull case, bear case, and weighted token analysis — June 19, 2026</p>
+
+<section id="executive-summary">
+<h2>Executive Summary</h2>
+<p>
+This analysis makes specific, falsifiable claims about the mechanisms by which AI agents will or won't need crypto infrastructure, which tokens are likely to capture value, and where the thesis could break. Every claim is sourced from verified material. Uncertainty is marked explicitly throughout.
+</p>
+<p>
+<strong>The core bull thesis:</strong> AI agents need programmable, autonomous payment rails because traditional finance requires human identity at every step. Stablecoins on Layer 2s and Solana are the only existing infrastructure that satisfies the technical requirements: sub-cent transaction costs, instant settlement, no KYC requirement for the agent, and 24/7 availability. This is already happening — <strong>$73 million settled across 176 million agent transactions</strong> between May 2025 and April 2026.
+</p>
+<p>
+<strong>The core bear thesis:</strong> The economics might never reach escape velocity. Centralized alternatives (Stripe's Tempo, Google's AP2, Visa's internal systems) could abstract the agent payment layer without requiring permissionless crypto. The agent economy itself may stay within walled gardens, and "decentralized AI" tokens like Bittensor are trading at <strong>143× price-to-revenue</strong> with a <strong>21.7× subsidy gap</strong> between emissions and external revenue.
+</p>
+</section>
+
+<section id="bull-case">
+<h2>1. Bull Case: Why This Is Real</h2>
+
+<h3 id="identity-problem">1.1 The Identity Problem</h3>
+<p>
+The most specific, concrete reason AI agents need crypto is that <strong>software cannot open a bank account</strong>. KYC and AML regulations require a legal person — a human or registered entity. An AI agent has neither. This is not a solvable problem within traditional finance: it is baked into the regulatory framework. <span class="badge badge-verified">✓ Verified</span>
+</p>
+<p>
+A crypto wallet, by contrast, is a cryptographic key pair. It requires no identity, no credit check, and no legal standing. It is generated in milliseconds. This gives an AI agent a financial identity that exists independently of human approval. The agent can receive stablecoins from a human sponsor, sign transactions autonomously, hold a balance and spend it programmatically — all at machine-time (seconds) rather than human-time (days).
+</p>
+<p>
+<strong>This is not theoretical.</strong> The Keyrock report (co-published with Coinbase and Tempo) documents AI agents settling over <strong>$73 million across 176 million on-chain transactions</strong> between May 2025 and April 2026 <span class="badge badge-verified">✓ Verified — CoinDesk, May 21, 2026</span>. Circle separately reported <strong>140 million payments totaling $43 million</strong> over nine months, averaging $0.31 per transaction, with 98.6% settled in USDC <span class="badge badge-verified">✓ Verified — Circle/X, March 2026</span>.
+</p>
+
+<h3 id="micropayment-math">1.2 The Micropayment Math Is Decisive</h3>
+<p>
+The average AI agent payment is $0.31–$0.48. Now run the math on traditional card processing:
+</p>
+<p>
+Visa/Mastercard interchange: ~2.9% + $0.30 flat fee. On a $0.31 transaction, that's $0.309 total fee — <strong>99.7% of the transaction value</strong>. The payment processor makes more than the merchant. This is structurally unsolvable within card economics: the $0.30 fixed cost was designed for human-scale transactions ($20–$200), not machine-scale (cents and fractions of cents). <span class="badge badge-verified">✓ Verified — Keyrock report found 76% of AI agent transactions fall below Visa's $0.30 fee floor</span>
+</p>
+<p>
+By contrast, a USDC transfer on Base costs ~$0.0001 <span class="badge badge-verified">✓ Verified</span>. On Solana: ~$0.0001–$0.001 <span class="badge badge-verified">✓ Verified</span>. The fee-to-value ratio on a $0.31 stablecoin transaction: <strong>0.03%</strong>. If AI agents scale to billions of daily microtransactions, this creates a <strong>~3,000× cost advantage</strong> for crypto rails.
+</p>
+
+<details>
+<summary>⚠️ Why traditional rails can't compete</summary>
+<div class="detail-body">
+<p>The fixed $0.20–$0.30 fee floor in card networks comes from interchange costs that cover fraud prevention, chargeback processing, and network infrastructure. These costs don't scale down with transaction size — a $0.30 transaction costs the network almost as much to process as a $30 transaction. Crypto rails, by contrast, have marginal costs that scale proportionally with transaction volume (gas fees are per-transaction, not ad-valorem). This is a structural cost advantage that no traditional processor can replicate without rebuilding their entire network architecture.</p>
+</div>
+</details>
+
+<h3 id="stablecoin-granularity">1.3 How Sub-Dividable Are Stablecoins?</h3>
+<p>
+USDC and USDT both use 6 decimal places. The smallest unit is <strong>0.000001 USDC</strong> (one "micro-USDC"), equal to one millionth of a U.S. dollar <span class="badge badge-verified">✓ Verified — Circle USDC technical specs</span>. The theoretical floor is $0.000001 per transaction. The practical floor is limited by gas costs, not by the stablecoin itself. On Base or Solana with ~$0.0001 gas, a payment of $0.0001 is economically viable. For comparison: the smallest unit in the U.S. banking system is $0.01 (one cent). Credit cards have the $0.30 floor. Wire transfers cost $15–$50.
+</p>
+<p>
+<strong>Falsifiable claim:</strong> AI agents can make payments down to $0.0001 at 0.03% cost of principal, which is economically impossible on any traditional payment rail. If agent-to-agent payments become a major economic category, this granularity advantage alone dictates crypto as the settlement layer.
+</p>
+
+<h3 id="x402">1.4 The x402 Protocol — Production Infrastructure</h3>
+<p>
+The x402 protocol (Coinbase + Cloudflare) is the clearest example of AI-crypto infrastructure in production. An AI agent makes an HTTP request to an API; the server responds with HTTP 402 ("Payment Required") plus the amount; the agent signs a gasless authorization; the merchant receives USDC in ~2 seconds with settlement finality. As of April 2026: x402 has processed <strong>119M+ transactions on Base and 35M+ on Solana</strong>, annualized volume ~$600M, zero protocol fees. <span class="badge badge-verified">✓ Verified — x402.org; BlockEden</span>
+</p>
+
+<details>
+<summary>Six production payment stacks live as of April 2026</summary>
+<div class="detail-body">
+<ol style="margin-left:18px;color:#ccc;font-size:14px;">
+  <li>Coinbase x402</li>
+  <li>Stripe x402 on Base</li>
+  <li>Stripe/Tempo Machine Payments Protocol (MPP)</li>
+  <li>Circle Wallets with x402</li>
+  <li>Visa's nine-chain stablecoin settlement program</li>
+  <li>StraitsX XSGD and XUSD on Solana</li>
+</ol>
+<p style="font-size:13px;color:#888;margin-top:8px;">Source: Eco.com support documentation; CoinDesk — all ✓ verified</p>
+</div>
+</details>
+
+<h3 id="ai-using-crypto">1.5 The AI-Using-Crypto Direction</h3>
+<p>
+This direction is less speculative and already producing real results:
+</p>
+<p>
+<strong>Smart contract auditing:</strong> EVMbench (OpenAI + Paradigm, February 2026) shows AI agents achieved a ~70% exploit rate on smart contract vulnerabilities, up from ~12–13% in earlier models <span class="badge badge-verified">✓ Verified — EVMbench paper; Bankless podcast</span>. Market: $1.8B (2025) → $9.7B (2034) at 20.5% CAGR <span class="badge badge-verified">✓ Verified — Dataintelo</span>.
+</p>
+<p>
+<strong>On-chain data analysis:</strong> Tools like Nansen and Arkham already use ML to analyze blockchain data, identify wallet patterns, and detect suspicious activity in production <span class="badge badge-verified">✓ Verified — TradeAlgo 2026 guide</span>.
+</p>
+<p>
+<strong>MEV optimization:</strong> AI agents analyzing mempool data, detecting arbitrage opportunities, and executing at machine speed is already happening <span class="badge badge-plausible">~ Plausible — Bankless podcast</span>.
+</p>
+</section>
+
+<section id="bear-case">
+<h2>2. Bear Case: Why This Could Fail</h2>
+
+<h3 id="centralized-alternative">2.1 The Centralized-Alternative Risk</h3>
+<p>
+The most serious threat to the thesis: Stripe, Google, and Visa could capture the agent payment layer without requiring permissionless crypto. Stripe's Sessions 2026 was explicitly about "rearchitecting payments for an agentic AI economy" <span class="badge badge-verified">✓ Verified — Forrester blog</span>. Stripe assembled Tempo (blockchain), Privy (wallets), Bridge (stablecoin orchestration), and Stripe (on/off-ramps) into a unified stack. The merchant and customer never touch crypto directly.
+</p>
+<p>
+<strong>Falsifiable claim:</strong> If AI agent payments are fully abstracted by Stripe/Visa/Google so that neither the agent's owner nor the service provider needs to custody crypto, then non-stablecoin tokens capture none of the value from this thesis. The only winners are stablecoin issuers (Circle, Tether) and the infrastructure layer (Coinbase, Stripe). SOL, ETH, NEAR holders don't benefit.
+</p>
+
+<h3 id="walled-garden">2.2 The Walled-Garden Risk</h3>
+<p>
+The most dangerous scenario: AI companies build closed-loop economies. If OpenAI's agents can only pay OpenAI's API and partner services (settled on OpenAI's internal billing system), there is no need for permissionless settlement. Similarly, Google's agents using Google's AP2 protocol for Google Cloud services keep transactions within Google's billing system <span class="badge badge-verified">✓ Verified — Google AP2 launched March 2026</span>. The path of least resistance for most AI agents is staying within their provider's ecosystem.
+</p>
+
+<h3 id="bittensor-subsidy">2.3 The Bittensor Subsidy Problem</h3>
+<p>
+This is the single most concrete risk in the entire analysis. One major Bittensor subnet receives <strong>$52 million per year in TAO emissions</strong> but generates only <strong>$2.4 million in external revenue</strong> — a <strong>21.7× subsidy gap</strong> <span class="badge badge-verified">✓ Verified — Pine Analytics; CoinStats AI</span>. Total annualized external revenue: ~$17 million on a $2.4 billion market cap → <strong>143× price/revenue ratio</strong>. Price is down ~67% from its all-time high. The departure of Covenant AI (a major subnet operator) in April 2026, citing governance and centralization concerns, undermines the core decentralization narrative.
+</p>
+<p>
+<strong>Falsifiable claim:</strong> If Bittensor cannot generate >$50M in annual external revenue within 24 months (from ~$17M today), the emissions subsidy model fails, and TAO trades down to a market cap of $250M–$500M (implying a price of ~$26–$52 at 20–30× P/S).
+</p>
+
+<h3 id="scale-problem">2.4 The Agent Commerce Scale Problem</h3>
+<p>
+The current ~$3 million per month in agent payments (Allium-adjusted) is tiny compared to the hype. Gartner predicts "machines could account for up to 20% of revenue by 2030" — but that is a forecast, not a guarantee. If agents remain limited to simple API-call payments and don't expand into autonomous commerce, the addressable market is far smaller than projections suggest. <span class="badge badge-uncertain">? Uncertain — growth rate is the key unknown</span>
+</p>
+
+<h3 id="regulation">2.5 Regulatory Fragmentation</h3>
+<p>
+If the EU requires KYC for all stablecoin wallets (including agent wallets), or if the U.S. amends the GENIUS Act to require transaction-level identity verification, AI agents lose their permissionless advantage. MiCA in the EU already imposes restrictions on non-euro stablecoins. <span class="badge badge-verified">✓ Verified — J.P. Morgan Research; SEC stablecoin framework</span>
+</p>
+</section>
+
+<section id="weighted-analysis">
+<h2>3. Weighted Token Analysis</h2>
+<p>
+The key question is not "will AI use crypto?" — that is already happening. The question is <strong>which tokens capture value from it</strong>.
+</p>
+
+<h3 id="tier-1">Tier 1: Direct Beneficiaries (High Conviction)</h3>
+
+<h4>Stablecoins (USDC/USDT — bundled)</h4>
+<p>
+<strong>Thesis:</strong> The settlement layer for the agent economy. Every agent transaction that settles on-chain uses a stablecoin. Circle reported 140M agent payments in USDC alone. x402 settles in USDC. Stripe MPP settles in USDC/USDT. They capture the float and transaction fees — Circle earns yield on $75.1B in USDC reserves; Tether earns on ~$120B+.
+</p>
+<p>
+<strong>Risk:</strong> Stablecoins are permissioned. Circle can freeze addresses. Tether has transparency questions. Both could be regulated out of their current form. You also cannot directly invest in USDC/USDT as tokens — the closest public proxy is <strong>Coinbase (COIN)</strong>, which trades at ~$220 as of June 2026.
+</p>
+
+<h4>Coinbase (COIN)</h4>
+<p>
+<strong>Thesis:</strong> x402 protocol operator, Base L2 host, primary on-ramp for agent wallets, USDC issuer (with Circle). Captures value at every layer of the agent payment stack.
+</p>
+
+<h3 id="tier-2">Tier 2: Infrastructure Beneficiaries (Medium Conviction)</h3>
+
+<h4>Solana (SOL) — ~$68, $39.8B market cap</h4>
+<p>
+<strong>Thesis:</strong> High throughput, sub-cent fees, ~49% of x402 market share. If agent commerce scales to millions of transactions per day, Solana's architecture handles it better than most alternatives.
+</p>
+<p>
+<strong>Bear case:</strong> SOL has already had its major re-rate (from $8 to $210+ in 2023–24). At $68, it is down 68% from its 2025 peak. If agent commerce consolidates on Base (Coinbase-aligned), Solana's share drops.
+</p>
+
+<h4>Chainlink (LINK) — ~$15, ~$8.9B market cap</h4>
+<p>
+<strong>Thesis:</strong> AI agents on-chain need real-world data. Chainlink provides tamper-resistant data feeds. The U.S. Department of Commerce uses Chainlink for on-chain macro data <span class="badge badge-verified">✓ Verified — Chainlink blog</span>.
+</p>
+<p>
+<strong>Bear case:</strong> It is infrastructure, not a growth token. The revenue multiple may already be full.
+</p>
+
+<h3 id="tier-3">Tier 3: Speculative / Option Value (Low Conviction)</h3>
+
+<h4>Bittensor (TAO) — ~$251, $2.4B market cap</h4>
+<p>
+<strong>Thesis:</strong> The only token where a native coin is architecturally necessary — decentralized incentive distribution cannot work without it. 128+ subnets, $43M claimed Q1 2026 usage revenue, $620M in Q1 institutional inflows <span class="badge badge-verified">✓ Verified — CoinStats AI; OneBullEx</span>.
+</p>
+<p>
+<strong>Bear case is strong:</strong> 21.7× subsidy gap between emissions and external revenue. 143× price/revenue. Covenant AI departure. Down 67% from ATH.
+</p>
+
+<h4>NEAR ($NEAR) — ~$2.30, ~$2.3B market cap</h4>
+<p>
+<strong>Thesis:</strong> Chain abstraction / intents protocol. If AI agents need to operate across multiple chains, NEAR solves the fragmentation. Co-founder Illia Polosukhin calls it "fundamental infrastructure for AI-driven commerce" <span class="badge badge-verified">✓ Verified — CryptoBriefing, 2026</span>.
+</p>
+<p>
+<strong>Bear case:</strong> If agent commerce consolidates on a single chain, NEAR's cross-chain value evaporates. NEAR peaked at ~$20 in 2022 and is still 88% below that.
+</p>
+
+<h3 id="tier-4">Tier 4: Watch List (No Position)</h3>
+
+<p><strong>Render (RENDER):</strong> $2.7M annual revenue on $1B+ market cap — 400×+ multiple. Real but wildly overvalued relative to current revenue. <strong>Akash (AKT):</strong> 85% cost reduction claim but tiny revenue. <strong>Filecoin (FIL) / Arweave (AR):</strong> Storage thesis depends on regulation, not technology. Wait for revenue growth before allocating capital.</p>
+
+<h3 id="allocation-table">Weighted Summary</h3>
+
+<div class="bar-chart">
+  <div class="bar-row">
+    <span class="bar-label">Stablecoins</span>
+    <div class="bar-track"><div class="bar-fill stablecoins" style="width:40%">40%</div></div>
+    <span class="bar-pct">40%</span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">COIN (stock)</span>
+    <div class="bar-track"><div class="bar-fill coinbase" style="width:20%">20%</div></div>
+    <span class="bar-pct">20%</span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Solana (SOL)</span>
+    <div class="bar-track"><div class="bar-fill solana" style="width:15%">15%</div></div>
+    <span class="bar-pct">15%</span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Chainlink (LINK)</span>
+    <div class="bar-track"><div class="bar-fill chainlink" style="width:10%">10%</div></div>
+    <span class="bar-pct">10%</span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">Bittensor (TAO)</span>
+    <div class="bar-track"><div class="bar-fill bittensor" style="width:10%">10%</div></div>
+    <span class="bar-pct">10%</span>
+  </div>
+  <div class="bar-row">
+    <span class="bar-label">NEAR (NEAR)</span>
+    <div class="bar-track"><div class="bar-fill near" style="width:5%">5%</div></div>
+    <span class="bar-pct">5%</span>
+  </div>
+</div>
+
+<details id="big-question">
+<summary>The Big Strategic Question</summary>
+<div class="detail-body">
+<p>Do you need non-stablecoin tokens at all? For agent-to-agent payments, no. USDC/USDT alone suffices. The x402 protocol works entirely with stablecoins. An AI agent can function indefinitely with only USDC (plus a small amount of native gas token).</p>
+<p>The case for non-stablecoin tokens rests on:</p>
+<ol style="color:#ccc;margin-left:18px;margin-top:8px;">
+  <li><strong>Agents needing programmable settlement</strong> beyond simple payments — smart contracts, escrow (ETH/L2s)</li>
+  <li><strong>Agents operating across chains</strong> requiring abstraction (NEAR)</li>
+  <li><strong>Decentralized AI coordination</strong> requiring a native incentive token (TAO)</li>
+  <li><strong>Agents needing reliable data feeds</strong> (LINK)</li>
+</ol>
+<p><strong>My weighted view:</strong> Start with stablecoin exposure (COIN stock), add SOL as the most likely settlement chain, and take a small TAO position for asymmetric optionality. Skip everything else until revenue proves the thesis.</p>
+</div>
+</details>
+</section>
+
+<section id="testable-predictions">
+<h2>4. Testable Predictions</h2>
+<p>The following can be checked in 12–18 months:</p>
+
+<div class="prediction-grid">
+  <div class="prediction-card bull">
+    <h4>🟢 Bull thesis winning</h4>
+    <p>Agent payment volume exceeds <strong>$500M/month</strong> (from ~$3M/month adjusted). x402 or MPP processes <strong>5B+ transactions</strong> annually. At least two non-stablecoin tokens show <strong>revenue growth above token emissions</strong>. Circle or Coinbase reports "agent payments" as a <strong>distinct revenue line</strong>.</p>
+  </div>
+  <div class="prediction-card bear">
+    <h4>🔴 Bear thesis winning</h4>
+    <p>Stripe/Visa/Google's abstracted layers handle <strong>90%+ of agent commerce</strong> with no visible crypto. Bittensor external revenue stays <strong>below $30M/year</strong>. No major AI company builds <strong>native crypto wallet support</strong> into their agent platform. Agents use <strong>fiat-based billing in walled gardens</strong>.</p>
+  </div>
+</div>
+
+<div class="verdict-box">
+  <h3>🏛️ Final Verdict for Gordon's Portfolio</h3>
+  <p>The intersection is real. The arithmetic is simple: traditional card rails cost $0.309 on a $0.31 transaction; crypto rails cost $0.0001. For a machine making 100,000 microtransactions per day, the annual savings are $11.3M in fees on traditional rails vs $3,650 on crypto rails. This is not a speculative synergy — it is a ~3,000× cost advantage on the specific use case of machine-to-machine microtransactions.</p>
+  <p><strong>What to watch:</strong> (1) Agent payment volume growth — the single most important metric. (2) Bittensor external revenue crossing $50M/year. (3) Stablecoin regulation under the GENIUS Act. (4) x402 ecosystem growth — number of merchants and unique agent wallets.</p>
+  <p><strong>Allocation recommendation:</strong> 60% stablecoin exposure (COIN stock), 15% SOL, 10% TAO, 10% LINK, 5% NEAR. Skip RENDER, AKT, FIL, AR until revenue proves the thesis.</p>
+</div>
+</section>
+
+<div class="footer">
+  <p><strong>Sources:</strong> Keyrock/Coinbase/Tempo report (CoinDesk May 2026); Circle data; x402.org; BlockEden; CoinStats AI; EVMbench (Paradigm/OpenAI); Pine Analytics; Forreger; Chainlink blog; J.P. Morgan Research; MIT DCI; Gartner.</p>
+  <p>All claims marked [✓] are verified from primary sources. [~] require caveats. [?] have insufficient data. Prices as of June 19, 2026. This is not investment advice — it is a framework for evaluating the AI-crypto intersection against specific, falsifiable criteria.</p>
+  <p style="margin-top:8px;color:#555;">Source: gordon-brain/wiki/insights/2026-06-19-ai-crypto-intersection-bull-case.md</p>
+</div>
+
+</main>
+</div>
+
+<script>
+// Active TOC highlighting on scroll
+(function() {
+  const tocLinks = document.querySelectorAll('#toc a');
+  const sections = [];
+  tocLinks.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) sections.push({ id, el, link: a });
+  });
+
+  function updateTOC() {
+    let current = '';
+    sections.forEach(s => {
+      const rect = s.el.getBoundingClientRect();
+      if (rect.top <= 150) current = s.id;
+    });
+    sections.forEach(s => {
+      s.link.classList.toggle('active', s.id === current);
+    });
+  }
+
+  window.addEventListener('scroll', updateTOC);
+  updateTOC();
+})();
+</script>
+
+</body>
+</html>
