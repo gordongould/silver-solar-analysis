@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silver, Solar & AI Commodities — Deep Dive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #f5f7fa;
+    color: #1a1a2e;
+    line-height: 1.7;
+  }
+  .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+  header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: white;
+    padding: 60px 0 50px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.2em; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+  header p { font-size: 1.1em; opacity: 0.85; max-width: 700px; margin: 0 auto; }
+  header .date { font-size: 0.85em; opacity: 0.6; margin-top: 12px; }
+  section { margin: 50px 0; }
+  h2 {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #16213e;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid #0f3460;
+  }
+  h3 { font-size: 1.15em; font-weight: 600; margin: 25px 0 12px; color: #0f3460; }
+  .chart-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+    padding: 25px;
+    margin: 30px 0;
+  }
+  .chart-card img { width: 100%; height: auto; border-radius: 6px; }
+  .chart-card .caption { margin-top: 15px; font-size: 0.9em; color: #555; }
+  .chart-card .caption strong { color: #1a1a2e; }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 0.9em;
+  }
+  .data-table th {
+    background: #16213e;
+    color: white;
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .data-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  .data-table tr:nth-child(even) { background: #f8f9fa; }
+  .data-table tr:hover { background: #e8f4f8; }
+  .data-table .metric { text-align: left; font-weight: 600; }
+  .highlight-box {
+    background: linear-gradient(135deg, #fff3cd, #fef9e7);
+    border-left: 4px solid #f0ad4e;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 25px 0;
+  }
+  .highlight-box.blue { background: linear-gradient(135deg, #e8f4f8, #d1ecf1); border-left-color: #0f3460; }
+  .highlight-box.green { background: linear-gradient(135deg, #d4edda, #c3e6cb); border-left-color: #28a745; }
+  .highlight-box.red { background: linear-gradient(135deg, #f8d7da, #f5c6cb); border-left-color: #dc3545; }
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 600;
+  }
+  .badge.up { background: #d4edda; color: #155724; }
+  .badge.down { background: #f8d7da; color: #721c24; }
+  .badge.neutral { background: #e8e8e8; color: #555; }
+  .key-insight { margin: 15px 0; padding: 15px; background: #f0f4ff; border-radius: 8px; }
+  .key-insight h4 { color: #0f3460; margin-bottom: 5px; }
+  .key-insight p { font-size: 0.95em; color: #333; }
+  .footer {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-size: 0.85em;
+    border-top: 1px solid #e8e8e8;
+    margin-top: 50px;
+  }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <h1>Silver, Solar &amp; AI Commodities</h1>
+    <p>How the AI infrastructure buildout, solar thrifting, and changing commodity intensities reshape the investment landscape for silver, copper, gold, and specialty chemicals.</p>
+    <div class="date">Research compiled: June 19, 2026 &mdash; Data from Silver Institute, Metals Focus, S&P Global, IEA, BofA, Sprott, Oxford Economics</div>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- CHART 1 -->
+<section>
+  <h2>The Decoupling</h2>
+  <p>Solar installations continue to grow at a breathtaking pace — 593 GW added in 2024, on track for 800+ GW annually by 2030. But the amount of <em>silver consumed per watt</em> is falling even faster. The result: a structural decoupling between solar capacity expansion and silver demand.</p>
+  <div class="chart-card">
+    <img src="charts/01_solar_silver_decoupling.png" alt="Solar Silver Demand vs Installed Capacity">
+    <div class="caption">
+      <strong>Key insight:</strong> In 2024, <span class="badge up">593 GW</span> of solar consumed <span class="badge up">232 Moz</span> of silver. By 2030, an estimated <span class="badge up">830 GW</span> will consume only <span class="badge down">~105 Moz</span>. The curve has bent.
+    </div>
+  </div>
+</section>
+
+<!-- CHART 2 -->
+<section>
+  <h2>Silver Intensity: The Thrifting Story</h2>
+  <p>The amount of silver needed to produce each watt of solar capacity has fallen from ~18 mg/W in 2020 to ~12.2 mg/W in 2024. The World Silver Survey 2026 estimates it will reach ~6.7 mg/W in 2026 — a 45% reduction in just two years. The CEA at INES has demonstrated sub-14 mg/Wp at module level, with a target of 3 mg/Wp by 2030.</p>
+  <div class="chart-card">
+    <img src="charts/02_silver_intensity_thrifting.png" alt="Silver Intensity Thrifting Trajectory">
+    <div class="caption">
+      <strong>Key technique shifts:</strong> Copper paste substitution on rear-side contacts (Jinko), silver-free all-back-contact modules (Aiko), base-metal substitution (LONGi), and copper electroplating for HJT cells. Each makes a dent.
+    </div>
+  </div>
+</section>
+
+<!-- CHART 3 -->
+<section>
+  <h2>Where is Industrial Silver Demand Going?</h2>
+  <p>Solar's share of industrial silver demand is declining in absolute terms, but data centers &amp; AI are growing fast from a small base. EVs and automotive continue their steady climb as EV penetration doubles silver content per vehicle.</p>
+  <div class="chart-card">
+    <img src="charts/03_silver_demand_by_sector.png" alt="Silver Demand by Sector Stacked Area">
+    <div class="caption">
+      <strong>The stack is rebalancing:</strong> Solar silver demand drops from 232 Moz (2024) toward ~105 Moz (2030). Data center &amp; AI silver demand grows from ~15 Moz to ~80 Moz in the same period. The gap narrows dramatically.
+    </div>
+  </div>
+</section>
+
+<!-- CHART 4 -->
+<section>
+  <h2>Crossover Math: Growth Rates</h2>
+  <p>The growth rates tell the story in a different way. Data center silver demand is projected to grow 433% from 2024 to 2030. EV demand grows 72%. Solar demand <em>contracts</em> by 55%. But the base matters — 55% of 232 Moz is a much larger number than 433% of 15 Moz.</p>
+  <div class="chart-card">
+    <img src="charts/04_growth_rates_comparison.png" alt="Growth Rates Comparison">
+    <div class="caption">
+      <strong>Don't let percentages mislead you:</strong> The 433% growth in data center silver starts from ~15 Moz. The 55% decline in solar starts from 232 Moz. The absolute crossover happens around 2029-2031.
+    </div>
+  </div>
+</section>
+
+<!-- CHART 5 -->
+<section>
+  <h2>When Do the Lines Cross?</h2>
+  <p>The most important chart in the analysis. Solar silver demand is falling from 232 Moz. Data center silver demand is rising from 15 Moz. The crossover — where data centers consume more silver than solar — happens around <strong>2029-2031</strong> in the baseline scenario.</p>
+  <div class="chart-card">
+    <img src="charts/05_crossover_solar_vs_dc.png" alt="Crossover Solar vs Data Center Silver Demand">
+    <div class="caption">
+      <strong>What has to happen for the crossover to come sooner:</strong> (1) Faster data center buildout (Goldman doubles US DC power by 2027), (2) Faster AI chip adoption pushing higher silver per server, (3) Slower solar thrifting if reliability concerns slow copper substitution. <strong>What delays it:</strong> Copper substitution proving reliable at scale, and "bragawatts" of announced data center capacity failing to materialize.
+    </div>
+  </div>
+</section>
+
+<!-- CHART 6 -->
+<section>
+  <h2>Solar Economics: Cost Per Watt</h2>
+  <p>Utility-scale solar LCOE has fallen from ~$300/MWh in 2010 to ~$30/MWh today — a 90% reduction. The DOE's SunShot target of $0.03/kWh was met by 2025. Silver's share of panel cost spiked to ~14% during the January 2026 peak at $117/oz, but has since moderated as silver corrected to $65-75/oz. This cost pressure is the <em>direct cause</em> of the thrifting acceleration.</p>
+  <div class="chart-card">
+    <img src="charts/06_solar_costs.png" alt="Solar Cost Trajectory and Silver Share">
+    <div class="caption">
+      <strong>The thrifting feedback loop:</strong> High silver prices → silver becomes ~14% of panel cost → manufacturers accelerate substitution → silver intensity drops → total silver demand from solar falls → silver faces demand headwinds → potential silver price moderation. This loop is already in motion.
+    </div>
+  </div>
+</section>
+
+<!-- CHART 7 -->
+<section>
+  <h2>Thin Film Solar: How Fast Can It Scale?</h2>
+  <p>Thin film technologies (CdTe, CIGS, Perovskite) use little to no silver — CdTe uses <strong>zero</strong>. But thin film was only ~5% of global solar production in 2024. First Solar (CdTe) dominates the US utility market with ~30% share there, but globally c-Si reigns. Perovskite's lab→fab gap remains the bottleneck: record efficiencies of 26.7% in lab vs. ~16% in modules at scale, with stability issues unresolved. Tellurium supply (~2,000 tonnes/year globally) is a hard ceiling on CdTe scale-up. Mordor Intelligence projects thin film reaching ~20% share by 2030, but from a tiny base.</p>
+  <div class="chart-card">
+    <img src="charts/07_thin_film_share.png" alt="Thin Film Solar Market Share">
+    <div class="caption">
+      <strong>3% global share in 2024, maybe 20% by 2030:</strong> Thin film is growing fast (20.5% CAGR) but starts from almost nothing. Even at 20% share by 2030, c-Si (which uses silver) remains dominant. The real silver-disruption scenario requires thin film to reach 30-40%+ share, which seems unlikely before 2032-2035.
+    </div>
+  </div>
+</section>
+
+<!-- CHART 8 -->
+<section>
+  <h2>Summary Dashboard</h2>
+  <div class="chart-card">
+    <img src="charts/08_summary_dashboard.png" alt="Key Metrics Dashboard">
+  </div>
+</section>
+
+<!-- WRITTEN ANALYSIS : CROSSOVER MATH -->
+<section>
+  <h2>Where the Crossover Happens — And What It Takes</h2>
+
+  <h3>Baseline Scenario</h3>
+  <p>Using Silver Institute / Metals Focus data plus Oxford Economics projections:</p>
+
+  <table class="data-table">
+    <tr>
+      <th>Year</th>
+      <th>Solar Silver (Moz)</th>
+      <th>DC+AI Silver (Moz)</th>
+      <th>Gap (Moz)</th>
+      <th>Solar mg/W</th>
+      <th>DC Capacity (GW)</th>
+    </tr>
+    <tr><td>2024</td><td>232</td><td>15</td><td>217</td><td>12.2</td><td>~50</td></tr>
+    <tr><td>2025</td><td>187</td><td>22</td><td>165</td><td>9.2</td><td>~55</td></tr>
+    <tr><td>2026</td><td>151</td><td>30</td><td>121</td><td>6.7</td><td>~62</td></tr>
+    <tr><td>2027</td><td>140</td><td>40</td><td>100</td><td>5.8</td><td>~75</td></tr>
+    <tr><td>2028</td><td>130</td><td>52</td><td>78</td><td>5.0</td><td>~90</td></tr>
+    <tr><td>2029</td><td>118</td><td>65</td><td>53</td><td>4.2</td><td>~115</td></tr>
+    <tr><td>2030</td><td>105</td><td>80</td><td>25</td><td>3.5</td><td>~145</td></tr>
+    <tr><td>2031</td><td>95</td><td>95</td><td><strong>0 (CROSSOVER)</strong></td><td>3.0</td><td>~180</td></tr>
+  </table>
+
+  <div class="key-insight">
+    <h4>What accelerates the crossover (data centers take over sooner)</h4>
+    <p>• US data center power doubles to 66 GW by 2027 (Goldman Sachs base case) — not yet fully priced into silver demand models<br>
+    • Nvidia's 800V architecture reduces copper, but increases high-performance connector demand where silver is irreplaceable<br>
+    • Each hyperscale AI data center (~1 GW) uses roughly 40-60% more silver per rack than traditional facilities<br>
+    • The $500B Stargate project and hyperscaler $736B combined capex in 2025-2026 materializes on schedule</p>
+  </div>
+
+  <div class="key-insight">
+    <h4>What delays the crossover (solar thrifting wins + data centers disappoint)</h4>
+    <p>• Aiko's silver-free back-contact module scales successfully and is adopted by other manufacturers<br>
+    • Copper substitution proves reliable in field conditions (currently "extremely limited" industry knowledge per Kiwa PVEL)<br>
+    • Data center buildout is "lumpy and delayed" — grid connection wait times averaging 4 years in the US<br>
+    • A material portion of announced AI capacity proves to be "bragawatts" (per Oxford Smith School / Marex Group)<br>
+    • Silver prices stay elevated ($75-100/oz), accelerating thrifting further than current forecasts</p>
+  </div>
+</section>
+
+<!-- DC SILVER DEMAND SECTION -->
+<section>
+  <h2>Data Center Silver Demand: The Growth Vector</h2>
+  <p>The data center silver demand story is less visible than solar, which makes it both interesting and uncertain. Here is what is known:</p>
+
+  <h3>Silver Content in AI Infrastructure</h3>
+  <table class="data-table">
+    <tr><th>Component</th><th>Silver Content</th><th>Notes</th></tr>
+    <tr><td class="metric">GPU accelerator (TIM)</td><td>8-12g</td><td>Thermal interface material — silver's thermal conductivity is unmatched</td></tr>
+    <tr><td class="metric">High-bandwidth memory module</td><td>2-4g</td><td>HBM3e/HBM4 stacks use silver in interconnects</td></tr>
+    <tr><td class="metric">Networking switch port (100+ GbE)</td><td>5-8g</td><td>High-frequency signal integrity requires silver</td></tr>
+    <tr><td class="metric">Server power delivery system</td><td>10-15g</td><td>Circuit breakers, relays, bus bars</td></tr>
+    <tr><td class="metric">AI-optimized server (total)</td><td><strong>40-60% more</strong></td><td>vs. traditional server — silver premium for performance</td></tr>
+    <tr><td class="metric">Edge computing facility</td><td>~10,000-15,000g</td><td>5,000+ new edge facilities by 2030 → 50-75 Moz cumulative</td></tr>
+  </table>
+
+  <div class="highlight-box blue">
+    <p><strong>Current data center silver demand estimate:</strong> ~15 Moz in 2024, growing to ~80 Moz by 2030. This is based on the Oxford Economics data center construction put-in-place forecast (showing 5× growth in construction spending from 2024 to 2035) combined with per-MW silver content estimates from the Silver Institute's "Next Generation Metal" report. Note: this is less precisely quantified than solar silver demand because data centers are not tracked as a single industry by silver surveys. The real number could be 20-50% higher or lower.</p>
+  </div>
+</section>
+
+<!-- SEMICONDUCTOR SILVER SECTION -->
+<section>
+  <h2>Semiconductor &amp; Chip Silver Demand</h2>
+  <p>Silver in semiconductors flows through three channels: <strong>(1)</strong> wire bonding and leadframes for chip packaging, <strong>(2)</strong> internal connections in multi-chip modules and advanced packaging (especially for AI accelerators), and <strong>(3)</strong> PCB traces and connectors on server motherboards and networking equipment.</p>
+
+  <p>Total electronics &amp; semiconductor silver demand was roughly <strong>~240 Moz in 2024</strong> (including all sub-sectors). The portion directly attributable to AI chips specifically is small but growing fast — the Oxford Economics report highlights that AI hardware (GPUs, TPUs, NPUs) uses silver in "internal connections and packaging" at a higher density than conventional logic chips.</p>
+
+  <div class="highlight-box">
+    <p><strong>The chemical connection:</strong> The semiconductor chemicals market ($16.2B in 2025, growing to $29.3B by 2030 at 12.6% CAGR) and specialty gases market ($11.7B → $22.5B by 2034) are directly leveraged to the same fab buildout that drives semiconductor silver demand. Linde, Air Liquide, and Air Products are the key industrial gas names. Unlike silver itself (where price drives demand destruction), these chemical companies have pricing power and long-term take-or-pay contracts.</p>
+  </div>
+</section>
+
+<!-- THIN FILM BOTTLENECKS -->
+<section>
+  <h2>Thin Film Solar: The Real Bottlenecks</h2>
+
+  <div class="two-col">
+    <div class="highlight-box red">
+      <h4>CdTe (Cadmium Telluride)</h4>
+      <p>• <strong>Tellurium supply ceiling:</strong> Global tellurium production ~500-600 tonnes/year. CdTe modules need ~1-2g Te per 100W panel. At current supply, max ~25-30 GW/year of CdTe production (First Solar's 2024 capacity: ~16 GW). Expanding Te supply requires expanding copper mining (Te is a byproduct of copper refining).<br>
+      • First Solar dominates (~30% US utility market) but is capital-intensive to scale.</p>
+    </div>
+    <div class="highlight-box red">
+      <h4>Perovskite</h4>
+      <p>• <strong>Lab→Fab gap:</strong> Record 26.7% efficiency in lab vs. ~16% in production-scale modules. Stability: perovskite cells degrade faster than c-Si, especially under heat and humidity. Commercial lifetimes of 5-10 years vs. 25+ for c-Si.<br>
+      • Lead content in best-performing formulations raises regulatory concerns.<br>
+      • Tandem (perovskite-on-silicon) is the more likely near-term path — and those <em>still use silver</em> on the silicon bottom cell.</p>
+    </div>
+  </div>
+  <div class="two-col">
+    <div class="highlight-box red">
+      <h4>CIGS</h4>
+      <p>• Complex manufacturing process with multiple vacuum deposition steps.<br>
+      • Indium availability: ~1,000 tonnes/year globally. CIGS uses ~10-20g/m² of indium.<br>
+      • Limited production scale outside of a few players (Solar Frontier, Avancis, Miasolé).<br>
+      • Module efficiency ~15-17%, below mainstream c-Si (21-24%).</p>
+    </div>
+    <div class="highlight-box green">
+      <h4>What to Watch</h4>
+      <p>• <strong>Perovskite-silicon tandems</strong> could be the bridge — combining high efficiency with c-Si's existing manufacturing base. Oxford PV already has pilot production. If these scale, they <em>reduce</em> silver per watt vs. pure c-Si but don't eliminate it.<br>
+      • First Solar's CdTe expansion to ~25 GW by 2027 is the biggest single thin-film catalyst.<br>
+      • <strong>Bottom line:</strong> Thin film disrupting silver demand before 2030 is unlikely. Even at 20% market share, c-Si remains the 80% majority user of silver paste.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW THESE CONNECT TO YOUR PORTFOLIO -->
+<section>
+  <h2>What This Means for Your Portfolio</h2>
+
+  <div class="highlight-box blue">
+    <h3>1. Silver: A Tale of Two Demand Curves</h3>
+    <p>Silver is in a tug-of-war between its largest source of industrial demand (solar, declining) and its fastest-growing source (AI infrastructure, accelerating). The net effect through 2029 is likely <strong>flat to slightly declining total industrial demand</strong> before data centers and EVs fully offset solar's reduction. This creates a ceiling on silver's upside relative to gold — which is why the gold/silver ratio has widened from ~30:1 in early 2025 to ~60:1 currently. For silver to reclaim its highs above $100/oz, you need either: (a) gold to keep rallying and pull silver along, or (b) data center buildout to dramatically exceed expectations, pulling the crossover forward to 2027-2028.</p>
+  </div>
+
+  <div class="highlight-box blue">
+    <h3>2. Copper: The Purest AI-Commodity Expression</h3>
+    <p>Copper has no thrifting headwind (you cannot substitute silver for copper in cables — silver is too expensive). Every data center, every grid upgrade, every EV charger, every solar farm interconnection needs copper. The S&P Global study showing a need for one Escondida mine per year for 30 years is the most powerful long-run supply constraint narrative in commodities. The near-term risk (per Reuters) is "bragawatts" and overestimated AI copper intensity — but even in the low-case scenario, copper demand grows. Copper is currently at $6.33/lb, up 31% YTD, and the copper-to-gold ratio remains at multi-decade lows, historically a precursor to copper outperformance.</p>
+  </div>
+
+  <div class="highlight-box blue">
+    <h3>3. Gold: The Independent Variable</h3>
+    <p>Gold is essentially uncorrelated to this entire analysis. Its drivers are central bank buying, de-dollarization, and fiscal dominance. Hartnett (BofA) targets $6,000/oz. Goldman targets $5,400. Your portfolio's 58% AI/mega-cap allocation is heavily exposed to growth and tech sentiment — gold would be the hedge against the macro tail risks that could puncture that thesis (recession, credit event, fiscal crisis). At current ~$4,250/oz, gold has already run but the structural bid from central banks shows no sign of abating.</p>
+  </div>
+
+  <div class="highlight-box blue">
+    <h3>4. The Chemical Play</h3>
+    <p>Unlike metals — where price increases trigger demand destruction and substitution — semiconductor chemicals and specialty gases are <em>process necessities</em> with no substitutes and high switching costs. The semiconductor chemicals market is growing at 12.6% CAGR to $29.3B by 2030. Linde ($LIN), Air Liquide, and Air Products have record backlogs tied to fab construction. Entegris ($ENTG) provides the filtration and contamination control for these ultra-pure processes. If you want AI infrastructure exposure without volatility, this is the quietest, highest-quality channel. Less exciting than silver, but also less likely to be disrupted.</p>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section>
+  <h2>Methodology &amp; Caveats</h2>
+  <p style="font-size:0.9em; color:#666;">
+    Data sources: Silver Institute World Silver Survey 2025 &amp; 2026 (Metals Focus), Silver Institute / Oxford Economics "Silver: The Next Generation Metal" (Dec 2025), S&P Global "Copper in the Age of AI" (Jan 2026), IEA Solar PV Outlook 2025, Goldman Sachs Research Data Center Power Demand, Lazard LCOE+ 2025, CEA at INES 2024 PV Silver Reduction Results, ITRPV 2025, Sprott Critical Materials Report (Mar 2026), Mordor Intelligence Thin Film PV Report, Reuters "AI may not be the demand booster copper bulls expect" (Jun 2026), SolarPowerWorld "Solar panels are trying to use less silver" (Mar 2026), BloombergNEF EV Outlook 2025.
+  </p>
+  <p style="font-size:0.9em; color:#666;">
+    The data center silver demand figures (15 Moz in 2024 → 80 Moz in 2030) are the author's estimates synthesized from multiple sources. Unlike solar silver demand (tracked directly by Metals Focus), data center silver is not broken out as a separate line item in the World Silver Survey. The range of uncertainty is wider. PV silver demand figures are from Metals Focus / Silver Institute and are the most reliable numbers in this analysis.
+  </p>
+  <p style="font-size:0.9em; color:#666;">
+    <strong>Not investment advice.</strong> This is an analytical framework for understanding the intersecting dynamics of silver, solar, AI infrastructure, and commodity markets. All investment decisions should incorporate your own research and risk assessment.
+  </p>
+</section>
+
+</div>
+
+<div class="footer">
+  <p>Prepared for Tumples Portfolio Research — June 2026</p>
+  <p>Charts generated with matplotlib • Data from publicly available research</p>
+</div>
+
+</body>
+</html>
